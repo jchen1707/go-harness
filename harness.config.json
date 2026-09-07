@@ -1,0 +1,132 @@
+{
+  "name": "go-harness",
+  "tracker": {
+    "team": "BAC"
+  },
+  "install": [
+    "go",
+    "mod",
+    "download"
+  ],
+  "gates": [
+    {
+      "name": "gofmt",
+      "kind": "format",
+      "run": [
+        "go",
+        "run",
+        "./tools/harnesscheck",
+        "-format"
+      ]
+    },
+    {
+      "name": "go vet",
+      "kind": "lint",
+      "run": [
+        "go",
+        "vet",
+        "./..."
+      ]
+    },
+    {
+      "name": "go build",
+      "kind": "types",
+      "run": [
+        "go",
+        "build",
+        "./..."
+      ]
+    },
+    {
+      "name": "go test -race",
+      "kind": "test",
+      "run": [
+        "go",
+        "test",
+        "-race",
+        "./..."
+      ]
+    },
+    {
+      "name": "harness infrastructure",
+      "kind": "test",
+      "run": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ]
+    }
+  ],
+  "hooks": {
+    "gatedPaths": [
+      "cmd",
+      "internal",
+      "tools",
+      "tests",
+      "scripts",
+      ".github/workflows"
+    ],
+    "gatedFiles": [
+      "go.mod",
+      "go.sum",
+      ".go-version",
+      ".nvmrc",
+      "harness.config.json",
+      ".claude/settings.json",
+      ".pre-commit-config.yaml"
+    ],
+    "gatedExtensions": [
+      ".go",
+      ".py",
+      ".mjs",
+      ".json",
+      ".toml",
+      ".yml",
+      ".yaml"
+    ],
+    "protected": [
+      {
+        "glob": "**/generated/**",
+        "why": "generated output; change its generator"
+      },
+      {
+        "glob": "go.sum",
+        "why": "regenerate with go mod tidy; never hand-edit"
+      }
+    ],
+    "secretVars": [
+      "LINEAR_API_KEY",
+      "GH_TOKEN"
+    ],
+    "formatters": [
+      {
+        "match": [
+          ".go"
+        ],
+        "run": [
+          [
+            "gofmt",
+            "-w"
+          ]
+        ]
+      }
+    ]
+  },
+  "review": {
+    "agentDir": ".claude/agents",
+    "checklistDir": "docs/agents/subagents",
+    "ninthAxis": {
+      "label": "concurrency",
+      "agent": "concurrency-reviewer"
+    },
+    "styleEnforcedBy": "gofmt and go vet"
+  },
+  "tests": [
+    "tests",
+    "**/*_test.go"
+  ]
+}

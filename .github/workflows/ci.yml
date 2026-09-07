@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [v2, main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: .go-version
+          cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/checkout@v4
+        with:
+          repository: jchen1707/harness
+          ref: main
+          path: .harness-check
+      - name: Set plugin location
+        run: echo "CLAUDE_PLUGIN_ROOT=$GITHUB_WORKSPACE/.harness-check/plugins/harness" >> "$GITHUB_ENV"
+      - run: go mod download
+      - run: node scripts/verify.mjs

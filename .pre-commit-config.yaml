@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: harness-gates
+        name: Declared harness gates
+        entry: node scripts/verify.mjs --changed
+        language: system
+        pass_filenames: false
+        always_run: true
