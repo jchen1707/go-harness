@@ -1,32 +1,25 @@
-<!-- A PR with an empty body is not done (CLAUDE.md, Definition of Done). Fill every
-section. Write in Simplified Technical English. -->
-
 ## Summary
 
-<!-- One paragraph: what this PR delivers and why. Include the magic words
-"Fixes BAC-123" on their own line — Linear's GitHub integration reads them to move the
-issue to In Review on open and Done on merge. -->
+<!-- Describe the requirement and resulting behavior. Link the Backend issue, e.g. Fixes BAC-123. -->
 
 ## What changed
 
-<!-- The changes a reviewer must know about, grouped by area. Not a file list — git has
-that. Name the decisions: new slice, new interface, promoted component, changed contract. -->
+<!-- Explain the decisions and package boundaries a reviewer needs to assess. -->
 
-## How to demo
+## How to verify
 
-<!-- Exact commands and the route to open. The reviewer must not guess.
-Example:
+<!-- Give exact commands and observable outcomes. This harness has no application server. -->
+
 ```sh
-uv run uvicorn app.main:app --reload
+node scripts/verify.mjs
 ```
-Then open http://127.0.0.1:8000/healthz -->
 
 ## Evidence
 
-<!-- Paste the real gate results, not an assertion that they passed:
-ruff check, ruff format --check, mypy, pytest; pytest -m integration when a change reaches
-Postgres or pgvector. Name any gate that did not run, with the reason. -->
+<!-- Include the reporter's actual gofmt, vet, build, race-test and infrastructure results.
+For services or workers, include failure, cancellation and shutdown evidence. Name any
+check that could not run and why. -->
 
 ## Risks and follow-ups
 
-<!-- What could break, what is deliberately out of scope, and the ticket that owns it. -->
+<!-- Describe remaining risks and link follow-up issues. -->
