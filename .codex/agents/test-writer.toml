@@ -1,0 +1,4 @@
+name = "test-writer"
+description = "Go test-writer."
+sandbox_mode = "workspace-write"
+developer_instructions = "Read .agents/agents/test-writer.md and follow its body; YAML frontmatter is adapter metadata."

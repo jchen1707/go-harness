@@ -1,0 +1,4 @@
+name = "concurrency-reviewer"
+description = "Go concurrency-reviewer."
+sandbox_mode = "read-only"
+developer_instructions = "Read .agents/agents/concurrency-reviewer.md and follow its body; YAML frontmatter is adapter metadata."

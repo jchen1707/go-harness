@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.harness-check/
+__pycache__/
+coverage.out
+bin/
+.DS_Store
+
+/harnesscheck

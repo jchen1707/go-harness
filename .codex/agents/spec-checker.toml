@@ -1,0 +1,4 @@
+name = "spec-checker"
+description = "Review Go changes along the spec-checker axis."
+sandbox_mode = "read-only"
+developer_instructions = "Read .agents/vendor/harness/agents/spec-checker.md, then docs/agents/subagents/spec-checker.md. Follow the shared frame and Go checklist together; YAML frontmatter is adapter metadata."
