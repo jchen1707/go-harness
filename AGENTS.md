@@ -23,3 +23,14 @@ Layer A arrives through `harness@harness`. Register `/plugin marketplace add jch
 
 Keep secrets out of logs, prompts and commits. See docs/agents/secrets.md.
 Delivery instructions and prerequisites are in docs/onboarding.md.
+
+## Learning capture and recall
+
+`SessionStart` consults a bounded project index. `UserPromptSubmit` retrieves relevant
+notes through layer A. Before planning or debugging, use `/search-second-brain <topic>`
+when deeper recall is needed. Cite the notes that inform the task. Expand to other
+projects when relevant. Missing configuration or unavailable retrieval is not an empty result.
+
+Session-end capture runs in a detached process. Inspect outcomes before recovering an
+interrupted session. Do not run bulk backlog recovery automatically. Configure
+`OBSIDIAN_VAULT_DIRECTORY` in user settings, never in this repository.
