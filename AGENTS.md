@@ -33,4 +33,5 @@ projects when relevant. Missing configuration or unavailable retrieval is not an
 
 Session-end capture runs in a detached process. Inspect outcomes before recovering an
 interrupted session. Do not run bulk backlog recovery automatically. Configure
-`OBSIDIAN_VAULT_DIRECTORY` in user settings, never in this repository.
+`OBSIDIAN_VAULT_DIRECTORY` in the runtime process environment, never in this repository.
+The process alias `OBSIDIAN_VAULT_DIR` is accepted when the canonical variable is absent.
