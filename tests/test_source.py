@@ -20,6 +20,15 @@ def snapshot(root):
 
 
 class SourceTests(unittest.TestCase):
+    def test_learning_lifecycle_is_wired_for_both_harnesses(self):
+        for config_path in ['.claude/settings.json', '.codex/hooks.json']:
+            hooks = json.loads((ROOT / config_path).read_text())['hooks']
+            for event in ['SessionStart', 'UserPromptSubmit']:
+                self.assertIn('vendor/harness/hooks/learning_recall.mjs', json.dumps(hooks[event]))
+            self.assertIn('codex_session_learnings.mjs', json.dumps(hooks['SessionEnd']))
+            self.assertEqual(hooks['SessionEnd'][0]['hooks'][0]['timeout'], 3)
+            self.assertEqual('--claude' in json.dumps(hooks['SessionEnd']), config_path.startswith('.claude'))
+
     def test_generation_is_deterministic_and_has_no_obsolete_carriers(self):
         with tempfile.TemporaryDirectory() as temp:
             outputs = [Path(temp) / name for name in ['first', 'second']]
