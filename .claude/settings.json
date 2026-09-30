@@ -59,7 +59,16 @@
     ]
   },
   "enabledPlugins": {
-    "harness@harness": true
+    "harness@harness": true,
+    "pstack@pstack-claude": true
+  },
+  "extraKnownMarketplaces": {
+    "pstack-claude": {
+      "source": {
+        "source": "github",
+        "repo": "michael-denyer/pstack-claude"
+      }
+    }
   },
   "plansDirectory": ".claude/plans"
 }
