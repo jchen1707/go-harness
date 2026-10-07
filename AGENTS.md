@@ -16,6 +16,7 @@ never maintain another selection loop. Review all eight shared axes and concurre
 Layer A is pinned under `.agents/vendor/harness/`; never hand-edit that tree or generated
 skill stubs. Read its docs/agents/delivery-review.md and docs/agents/testing.md.
 Codex hooks live in `.codex/hooks.json`; Claude uses `.claude/settings.json`.
+`.claude/skills` is a symlink to `.agents/skills/`, so Claude Code discovers the same stubs.
 <!-- /harness:agnostic -->
 <!-- harness:claude
 Layer A arrives through `harness@harness`. Register `/plugin marketplace add jchen1707/harness` once per machine. Read the plugin's delivery-review and testing doctrine.

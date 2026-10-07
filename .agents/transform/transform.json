@@ -1,13 +1,28 @@
 {
   "symlinks": {
-    ".claude/agents": "../.agents/agents"
+    ".claude/agents": "../.agents/agents",
+    ".claude/skills": "../.agents/skills"
   },
   "drop": [
     ".agents",
     ".codex",
     ".github/workflows/generate-main.yml",
     ".github/workflows/vendor-freshness.yml",
-    "tests/test_source.py"
+    "tests/test_source.py",
+    ".claude/skills/arch",
+    ".claude/skills/context",
+    ".claude/skills/full-review",
+    ".claude/skills/implement-from-plan",
+    ".claude/skills/lint",
+    ".claude/skills/loop-goal",
+    ".claude/skills/new-project",
+    ".claude/skills/plan",
+    ".claude/skills/prune-rules",
+    ".claude/skills/retro",
+    ".claude/skills/run",
+    ".claude/skills/search-second-brain",
+    ".claude/skills/test",
+    ".claude/skills/verify"
   ],
   "instructions": {
     "from": "AGENTS.md",
