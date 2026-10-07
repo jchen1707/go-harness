@@ -14,6 +14,15 @@ def run(*args, cwd=ROOT):
     return subprocess.run(args, cwd=cwd, text=True, capture_output=True)
 
 
+def tracked_symlinks():
+    links = {}
+    for entry in run('git', 'ls-files', '-s').stdout.splitlines():
+        metadata, _, name = entry.partition('\t')
+        if metadata.startswith('120000 '):
+            links[name] = run('git', 'cat-file', '-p', f':{name}').stdout
+    return links
+
+
 def snapshot(root):
     return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in root.rglob('*') if p.is_file()}
@@ -41,7 +50,7 @@ class SourceTests(unittest.TestCase):
             self.assertFalse((out / 'AGENTS.md').exists())
             self.assertFalse((out / '.agents').exists())
             self.assertFalse((out / '.codex').exists())
-            self.assertFalse((out / '.claude/skills').exists())
+            self.assertEqual(list(out.rglob('openai.yaml')), [])
             settings = json.loads((out / '.claude/settings.json').read_text())
             self.assertTrue(settings['enabledPlugins']['harness@harness'])
             self.assertNotIn('hooks', settings)
@@ -51,6 +60,16 @@ class SourceTests(unittest.TestCase):
                     self.assertNotIn('harness:' + 'agnostic', text, str(path))
                     self.assertNotIn('harness:' + 'claude', text, str(path))
                     self.assertNotIn('.claude/vendor', text, str(path))
+                    self.assertNotIn('.agents/', text, str(path))
+
+    def test_transform_materialises_every_tracked_symlink(self):
+        # `main` drops `.agents/`, so a tracked link into it that the manifest does not
+        # materialise ships dangling. Read from the index, so a checkout that wrote links
+        # as text files still sees them.
+        manifest = json.loads((ROOT / '.agents/transform/transform.json').read_text())
+        links = tracked_symlinks()
+        self.assertTrue(links, 'no tracked symlinks found')
+        self.assertEqual(manifest.get('symlinks', {}), links)
 
     def test_vendor_manifest_matches_every_byte(self):
         vendor = ROOT / '.agents/vendor/harness'
